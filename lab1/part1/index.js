@@ -1,13 +1,5 @@
 const fs = require('fs');
 
-const cipherXor = (text = '', key) => {
-  let crypt = [...text].map(t => {
-    return t.charCodeAt(0) ^ key;
-  });
-
-  return String.fromCharCode(...crypt);
-};
-
 const cipherHexXor = (text = '', key) => {
   let crypt = [];
   for (let i = 0; i < text.length; i += 2) {
