@@ -43,8 +43,8 @@ const combNumWords = () => {
   return pos <= 3 ? `${tmpWord}${getRandomInt(0, 99999)}` : `${getRandomInt(0, 99999)}${tmpWord}`
 };
 
-const hardRandom = () => {
-  const length = getRandomInt(6, 14);
+const hardRandom = (length) => {
+  length = length || getRandomInt(6, 14);
 
   const string = 'abcdefghijklmnopqrstuvwxyz';
   const numeric = '0123456789';
@@ -69,9 +69,9 @@ const hardRandom = () => {
   return password.substr(0, length);
 }
 
-const generate = () => {
+const generate = (quantity) => {
   console.log('Wait, generating...')
-  const passQuant = 100000, passwords = [];
+  const passQuant = quantity || 100000, passwords = [];
 
   let popPass = fs.readFileSync('res/pop-pass.txt', 'utf8');
   popPass = popPass.split('\r\n');
@@ -104,5 +104,6 @@ const generate = () => {
 
 module.exports = {
   getRandomInt,
+  hardRandom,
   generate
 }

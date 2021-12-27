@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "salted-md5": "^4.0.2"
+  }
+}
