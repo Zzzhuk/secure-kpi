@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-main>
-      <Login v-if="route === 'login'" @onRedirect="route = $event"/>
-      <SignUp v-else-if="route === 'sign-up'" @onRedirect="route = $event"/>
+      <Login v-if="route === 'login'" @onSubmit="onSubmit" @onRedirect="route = $event"/>
+      <SignUp v-else-if="route === 'sign-up'" @onSubmit="onSubmit" @onRedirect="route = $event"/>
       <Success v-else-if="route === 'success'" @onRedirect="route = $event"/>
     </v-main>
   </v-app>
@@ -26,6 +26,14 @@ export default {
   data: () => ({
     route: 'login'
   }),
+
+  methods: {
+    onSubmit(bool) {
+      if (bool){
+        this.route = 'success';
+      }
+    }
+  }
 };
 </script>
 

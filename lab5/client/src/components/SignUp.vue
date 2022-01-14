@@ -12,15 +12,19 @@
           required
       ></v-text-field>
       <v-text-field
+          @input="alert = false"
           v-model="password"
           :rules="passwordRules"
+          type="password"
           label="Password"
           required
       ></v-text-field>
       <v-text-field
+          @input="alert = false"
           v-model="confirmPassword"
-          :rules="confirmPasswordRules"
+          :rules="[confirmPasswordRules, confirmPasswordIdentical]"
           label="Confirm password"
+          type="password"
           required
       ></v-text-field>
       <v-btn
@@ -39,14 +43,18 @@
         to Login
       </v-btn>
     </v-form>
+    <v-alert v-if="alert" type="error">Error sign up!</v-alert>
   </div>
 </template>
 
 <script>
+import axios from '../utils/axios';
+
 export default {
   name: "SignUp",
   data: () => ({
     valid: true,
+    alert: false,
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -58,15 +66,28 @@ export default {
       v => /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(v) || 'The string must contain: 1 symbol "a-z", 1 - "A-Z", 1 - "0-9", min length - 6 symbols',
     ],
     confirmPassword: '',
-    confirmPasswordRules: [
+    confirmPasswordRules:
       v => !!v || 'Password is required',
-      v => this.password === v || 'Passwords must be identical'
-    ]
   }),
+  computed: {
+    confirmPasswordIdentical(){
+      return this.password === this.confirmPassword || 'Passwords must be identical'
+    }
+  },
   methods: {
     async submit() {
+      try {
+        const response = await axios.post('/sign-up', {
+          email: this.email,
+          password: this.password
+        });
+        console.log('sign-up', response);
 
-      this.$emit('onSubmit', {})
+        this.$emit('onSubmit', true);
+      } catch (e) {
+        console.error('Error sign up:', e);
+        this.alert = true;
+      }
     }
   }
 }

@@ -14,11 +14,14 @@
       <v-text-field
           v-model="password"
           :rules="passwordRules"
+          @input="alert = false"
           label="Password"
+          type="password"
           required
       ></v-text-field>
       <v-btn
           :disabled="!valid"
+          @input="alert = false"
           @click="submit"
           color="success"
           class="ma-2"
@@ -33,14 +36,18 @@
         to Sign Up
       </v-btn>
     </v-form>
+    <v-alert v-if="alert" type="error">Error login! Check your credentials</v-alert>
   </div>
 </template>
 
 <script>
+import axios from '../utils/axios';
+
 export default {
   name: "Login",
   data: () => ({
     valid: true,
+    alert: false,
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -52,7 +59,18 @@ export default {
   }),
   methods: {
     async submit() {
-      this.$emit('onSubmit', {})
+      try {
+        const response = await axios.post('/login', {
+            email: this.email,
+            password: this.password
+        });
+        console.log('login', response);
+
+        this.$emit('onSubmit', true);
+      } catch (e) {
+        console.error('Error login:', e);
+        this.alert = true;
+      }
     }
   }
 }
