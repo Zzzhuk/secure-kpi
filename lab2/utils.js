@@ -1,6 +1,6 @@
 module.exports = {
   bytesToString: (bytes) => {
-    return String.fromCharCode.apply(String, bytes);
+    return String.fromCharCode(...bytes);
   },
   stringToBytes: (str) => {
     let result = [];
@@ -23,8 +23,7 @@ module.exports = {
     let n = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charAt(i);
-
-      if (/[a-zA-Z,.'"\-:]/.test(char))
+      if (/[a-zA-Z,.'"\-:\s]/.test(char))
         n++;
     }
 

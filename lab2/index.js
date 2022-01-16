@@ -1,4 +1,4 @@
-
+const {analyzer} = require('./salsa20');
 const texts = [
   '280dc9e47f3352c307f6d894ee8d534313429a79c1d8a6021f8a8eabca919cfb685a0d468973625e757490daa981ea6b',
   '3a0a9cab782b4f8603eac28aadde1151005fd46a859df21d12c38eaa858596bf2548000e883d72117466c5c3a580f66b',
@@ -21,4 +21,8 @@ const texts = [
   '2f0cdfe464344e8650edc59daac3504b1710d56b89dce5011e8c90f6'
 ];
 
+//Trying The
+let word = 'The ';
+const res = analyzer(texts, word);
 
+console.log(`Result with ${word}\n`, res);

@@ -20,22 +20,25 @@ const analyzer = (textArr, word) => {
     for (let j = 0; j < arrBytes.length; j++) {
       let minLength = Math.min(arrBytes[i].length, arrBytes[j].length);
 
-      let fBytesArr = arrBytes[i].slice(0, minLength - 1);
-      let sBytesArr = arrBytes[j].slice(0, minLength - 1);
+      let fBytesArr = arrBytes[i].slice(0, minLength);
+      let sBytesArr = arrBytes[j].slice(0, minLength);
 
       let xorArr = cipherDecipher(fBytesArr, sBytesArr);
       let wordBytes = stringToBytes(word);
       let resBytes = cipherDecipher(xorArr, wordBytes);
       let resStr = bytesToString(resBytes);
       strArr.push(resStr);
+      // console.log(`Res string ${i}, ${j}`, resStr)
     }
 
-    const text = '';
+    let text = '';
     for(let sIdx = 0; sIdx < strArr.length; sIdx++){
       let strPart = strArr[sIdx];
       const minLength = Math.min(strPart.length, word.length);
-      text.concat(strPart.substring(0, minLength))
+      text += strPart.substring(0, minLength) + '\n';
     }
+
+    // console.log('text', text)
 
     const percent = textPercent(text);
     if(percent > bestPercent){
@@ -48,5 +51,6 @@ const analyzer = (textArr, word) => {
 };
 
 module.exports = {
-  analyzer
+  analyzer,
+  cipherDecipher
 }
