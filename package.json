@@ -5,6 +5,7 @@
     "mongoose": "^6.1.4",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.6",
+    "python-shell": "^3.0.1",
     "salted-md5": "^4.0.2"
   },
   "devDependencies": {

@@ -7,7 +7,10 @@ class Lcg {
   }
 
   next(){
+    console.log('a, seed, c, mod', this.a, this.seed, this.c, this.mod)
     let res = (this.a * this.seed + this.c) % this.mod;
     return res;
   }
 }
+
+module.exports = Lcg;
