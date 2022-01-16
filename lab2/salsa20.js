@@ -1,5 +1,5 @@
 const {bytesToString, stringToBytes, textPercent, hexToBytes} = require('./utils');
-const cipherDecipher = (bytes, key) => {
+const xor = (bytes, key) => {
   const result = [];
 
   for (let i = 0; i < bytes.length; i++) {
@@ -23,9 +23,9 @@ const analyzer = (textArr, word) => {
       let fBytesArr = arrBytes[i].slice(0, minLength);
       let sBytesArr = arrBytes[j].slice(0, minLength);
 
-      let xorArr = cipherDecipher(fBytesArr, sBytesArr);
+      let xorArr = xor(fBytesArr, sBytesArr);
       let wordBytes = stringToBytes(word);
-      let resBytes = cipherDecipher(xorArr, wordBytes);
+      let resBytes = xor(xorArr, wordBytes);
       let resStr = bytesToString(resBytes);
       strArr.push(resStr);
       // console.log(`Res string ${i}, ${j}`, resStr)
@@ -51,6 +51,5 @@ const analyzer = (textArr, word) => {
 };
 
 module.exports = {
-  analyzer,
-  cipherDecipher
+  analyzer
 }
