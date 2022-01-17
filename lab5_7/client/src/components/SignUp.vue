@@ -36,7 +36,7 @@
         Submit
       </v-btn>
       <v-btn
-          @click="$emit('onRedirect', 'login')"
+          @click="$router.push('/login')"
           color="info"
           class="ma-2"
       >
@@ -81,9 +81,10 @@ export default {
           email: this.email,
           password: this.password
         });
-        console.log('sign-up', response);
 
-        this.$emit('onSubmit', true);
+        const {token} = response.data;
+        localStorage.setItem('token', token);
+        this.$router.push('/profile').then();
       } catch (e) {
         console.error('Error sign up:', e);
         this.alert = true;

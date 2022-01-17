@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const config = require('./config');
+
 
 const errorHandler = (err, req, res, next) => {
   if (res.headersSent) {
@@ -15,6 +17,7 @@ const errorHandler = (err, req, res, next) => {
 
 const app = express();
 
+app.disable('x-powered-by');
 app.set('port', 3000);
 
 app.listen(app.get('port'), () => {
@@ -32,5 +35,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(morgan('dev'));
 
 app.use('/api', require('./routes/auth'));
+app.use('/api', require('./routes/user'));
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
