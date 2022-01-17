@@ -1,6 +1,8 @@
 const {getA, getC} = require('./utils');
 const Lcg = require('./lcg');
+const {MersenneTwister19937} = require('random-js')
 const {play} = require('./remoteCasino');
+const moment = require('moment');
 
 const mod = Math.pow(2, 32);
 
@@ -45,6 +47,26 @@ const hackLcg = async (id) => {
   }
 };
 
+const hackMT = async (id, account) => {
+  // const resTestPlay = await play({mode: 'Mt', id, bet: 1, number: 0});
+  // const creation_time = moment(resTestPlay.account.deletionTime).subtract(1, 'hour');
+  if (account?.id) {
+    const creation_time = moment(account.deletionTime).subtract(1, 'hour');
+    let timestamp = creation_time.utc().unix();
+    console.log('timestamp', timestamp)
+    const mt = MersenneTwister19937.seed(timestamp);
+    while (account.money < 1000000 && account.money > 0) {
+      let genNum = mt.next();
+      genNum = genNum < 0 ? genNum * -1 : genNum;
+      console.log('log mt gen num', genNum )
+      const resPlay = await play({mode: 'Mt', id, bet: 1, number: genNum});
+      account.money = resPlay?.account?.money || 0
+      console.log('res mt mode test:', resPlay);
+      // // console.log('utcOffset', moment().utcOffset(resPlay.account.deletionTime));
+    }
+  }
+};
+
 module.exports = {
-  hackLcg
+  hackLcg, hackMT
 }

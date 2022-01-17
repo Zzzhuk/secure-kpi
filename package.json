@@ -2,10 +2,12 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "moment": "^2.29.1",
     "mongoose": "^6.1.4",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.6",
     "python-shell": "^3.0.1",
+    "random-js": "^2.1.0",
     "salted-md5": "^4.0.2"
   },
   "devDependencies": {

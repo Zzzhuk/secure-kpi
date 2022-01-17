@@ -1,11 +1,12 @@
 const {createAcc, play} = require('./remoteCasino');
-const {hackLcg} = require('./hackRandoms');
+const {hackLcg, hackMT} = require('./hackRandoms');
 
-const id = 'zaza';
+const id = 'test';
 
-createAcc(id).then();
 //
 (async () => {
-  await hackLcg(id)
+  // await hackLcg(id);
+  const account = await createAcc(id);
+  await hackMT(id, account);
 })()
 
